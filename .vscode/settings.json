@@ -1,0 +1,4 @@
+{
+    "astro.enableTsPlugin": true,
+    "typescript.tsdk": "node_modules/typescript/lib"
+}

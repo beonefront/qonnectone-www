@@ -1,9 +1,9 @@
-# test
+# How to use config.ts file instead on yaml and start supporting types in the project
 # https://github.com/settings/developers
 # https://docs.netlify.com/security/secure-access-to-sites/oauth-provider-tokens/#netlify-ui-settings
 backend:
   name: github
-  repo: kubek93/qonnect-events
+  repo: beonefront/qonnectone-www
   branch: main
   auth_scope: repo
 
@@ -13,6 +13,8 @@ public_folder: "/images/uploads"
 collections:
   - label: "Pages"
     name: "pages"
+    editor:
+      preview: false
     files:
       - label: "Home"
         name: "home"
@@ -21,43 +23,3 @@ collections:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Intro", name: "intro", widget: "text" }
           - { label: "Body", name: "body", widget: "markdown" }
-  - name: "events"
-    label: "Events"
-    folder: "src/content/events"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    editor:
-      preview: false
-    fields:
-      - { label: "Tytuł wydarzenia", name: "title", widget: "string" }
-      - { label: "Skrócony opis", name: "short_description", widget: "text" }
-      - { label: "Opis wydarzenia", name: "description", widget: "text" }
-      - { label: "Data startu", name: "start_date", widget: "datetime", format: "YYYY-MM-DD HH:mm", date_format: "YYYY-MM-DD", time_format: "HH:mm" }
-      - { label: "Lokalizacja", name: "location", widget: "string", required: false }
-      - { label: "Link do biletów", name: "tickets_url", widget: "string", required: false }
-      - { label: "Link do Google Maps", name: "google_maps_url", widget: "string", required: false }
-      - { label: "Zdjęcie", name: "thumbnail", widget: "image", required: true }
-  - name: "news"
-    label: "News"
-    folder: "src/content/news"
-    create: true
-    slug: "{{slug}}"
-    editor:
-      preview: false
-    fields:
-      - { label: "Tytuł", name: "title", widget: "string" }
-      - name: "category"
-        label: "Kategoria wpisu"
-        widget: "select"
-        default: "news"
-        options:
-          - { label: "Information", value: "information" }
-          - { label: "Video", value: "video" }
-          - { label: "Music", value: "music" }
-          - { label: "Interview", value: "interview" }
-      - { label: "Data publikacji", name: "date", widget: "datetime" }
-      - { label: "Krótki Opis", name: "short_description", widget: "text", required: false }
-      - { label: "Opis", name: "description", widget: "text", required: false }
-      - { label: "Tagi", name: "tags", widget: "list", required: false }
-      - { label: "Zdjęcie", name: "thumbnail", widget: "image", required: false }
-      - { label: "Opublikowano", name: "published", widget: "boolean", required: false }
