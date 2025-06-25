@@ -1,118 +1,323 @@
 ---
 // src/pages/index.astro
+import "../styles/global.css";
 const index = await Astro.glob('../content/pages/index.md');
 const indexData = index[0].frontmatter;
 console.log('indexData', indexData);
+import logo from '../assets/logo.png';
+import logoWhite from '../assets/logo-white.png';
+// Add import for the new React component
+import ShowGifSection from '../components/ShowGifSection.jsx';
+// Add import for the new StatsSection React component
+import StatsSection from '../components/StatsSection.jsx';
 ---
-
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wydarzenia | Kalendarz Imprez</title>
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <script>
-    // tailwind.config = JSON.parse(`---${JSON.stringify(tailwindConfig.theme)}---`);
-  </script>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      min-height: 100vh;
-      color: #e2e8f0;
-    }
-
-    .glass-card {
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .event-card {
-      transition: all 0.3s ease;
-      transform-origin: center;
-    }
-
-    .event-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-    }
-
-    .date-badge {
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .date-badge:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .gradient-bg {
-      background: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
-    }
-
-    .map-container {
-      height: 300px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .map-container iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .text-gradient {
-        background: linear-gradient(90deg, #ff3e82 0%, #8e44ad 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qonnect</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
-<body class="font-sans antialiased">
-  <p>{indexData.title}</p>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="dark-mode-toggle bg-gray-800 text-white rounded-full p-3 shadow-lg">
+        <i class="fas fa-moon"></i>
+    </button>
 
-  <script>
-    // Obsługa mapy
-    document.querySelectorAll('.map-container iframe').forEach(iframe => {
-      iframe.onload = function() {
-        iframe.style.opacity = 1;
-      };
-      iframe.style.opacity = 0;
-      iframe.style.transition = 'opacity 0.5s ease-in-out';
-    });
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-xl"></i>
+                    </div>
+                    <a href="/" class="ml-3 text-xl font-bold text-gray-900 dark:text-white">
+                        <img src={logo.src} alt="Qonnect Logo" class="inline-block h-7">
+                    </a>
+                </div>
 
-    // Animacje przycisków
-    document.querySelectorAll('a, button').forEach(btn => {
-      btn.addEventListener('mousedown', () => {
-        btn.style.transform = 'scale(0.98)';
-      });
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/product" class="nav-link font-medium hover:text-primary">Product</a>
+                    <a href="/developers" class="nav-link font-medium hover:text-primary">Developers</a>
+                    <a href="/support" class="nav-link font-medium hover:text-primary">Support</a>
+                    <a href="/contact" class="nav-link font-medium hover:text-primary">Contact</a>
+                </div>
 
-      btn.addEventListener('mouseup', () => {
-        btn.style.transform = '';
-      });
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-600 dark:text-gray-300">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
 
-      btn.addEventListener('mouseleave', () => {
-        btn.style.transform = '';
-      });
-    });
-  </script>
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="mobile-menu md:hidden">
+                <div class="flex flex-col space-y-4 pb-4">
+                    <a href="#" class="py-2 font-medium hover:text-primary">Products</a>
+                    <a href="#" class="py-2 font-medium hover:text-primary">Developers</a>
+                    <a href="#" class="py-2 font-medium hover:text-primary">Support</a>
+                    <a href="#" class="py-2 font-medium hover:text-primary">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="text-white hero-bg from-primary">
+        <div class="container mx-auto px-4 py-16 md:py-24">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-6">
+                    Your Complete API Platform
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Search for API development through team collaboration.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button class="cursor-pointer bg-white text-gray-900 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition">
+                        Check out product <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button class="cursor-pointer bg-transparent border border-gray-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-500 transition">
+                        Watch Demo <i class="fas fa-play-circle ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center md:text-left w-full md:w-3/5 mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Speed up API development through team</h2>
+                <p class="text-gray-600 dark:text-gray-300">
+                    Prototype, document, test, and demo all your APIs in one place. Get early feedback by having conversations in the context of any API—internal, public, or partner—not scattered across tools.
+                </p>
+            </div>
+
+            <video playsinline="" preload="metadata" src="https://voyager.postman.com/video/grow-with-postman/drastically-speed-up-api-development-by-reducing-collaboration-friction-video.mp4" type="video/mp4" poster="" autoplay="" loop="" muted=""></video>
+
+
+        </div>
+    </section>
+
+    <!-- START SECTION SHOW GIF -->
+    <ShowGifSection client:load />
+    <!-- END SECTION SHOW GIF -->
+
+    <!-- Integration Section -->
+    <section class="py-18 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-15 md:mb-0 text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Connect Your Favorite Tools</h2>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        Increase your productivity by connecting your favorite tools to ensure you can use more important key parts than ever before.
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-8">
+                        Check your own resources on Project and integrate seamlessly with your existing workflow.
+                    </p>
+                    <button class="text-white bg-blue px-6 py-3 rounded-lg font-medium hover:bg-blue-900 transition">
+                        Explore Integrations
+                    </button>
+                </div>
+
+                <div class="md:w-1/2 grid grid-cols-3 gap-4">
+                    <div class="tool-item bg-white dark:bg-gray-700 rounded-lg p-6 flex items-center justify-center shadow-md">
+                        <i class="fab fa-github text-4xl"></i>
+                    </div>
+                    <div class="tool-item bg-white dark:bg-gray-700 rounded-lg p-6 flex items-center justify-center shadow-md">
+                        <i class="fab fa-slack text-4xl text-purple-600"></i>
+                    </div>
+                    <div class="tool-item bg-white dark:bg-gray-700 rounded-lg p-6 flex items-center justify-center shadow-md">
+                        <i class="fab fa-aws text-4xl text-orange-500"></i>
+                    </div>
+                    <div class="tool-item bg-white dark:bg-gray-700 rounded-lg p-6 flex items-center justify-center shadow-md">
+                        <i class="fab fa-google text-4xl text-blue-600"></i>
+                    </div>
+                    <div class="tool-item bg-white dark:bg-gray-700 rounded-lg p-6 flex items-center justify-center shadow-md">
+                        <i class="fab fa-microsoft text-4xl text-blue-500"></i>
+                    </div>
+                    <div class="tool-item bg-white dark:bg-gray-700 rounded-lg p-6 flex items-center justify-center shadow-md">
+                        <i class="fab fa-docker text-4xl text-blue-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- START Stats Section -->
+    <StatsSection client:load />
+    <!-- END Stats Section -->
+
+    <!-- Platform Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="platform-card text-white rounded-2xl overflow-hidden">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 p-8 md:p-12">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Join Main Platforms Works</h2>
+                        <p class="text-gray-200 mb-6">
+                            The main platform is the virtual platform that provides the new tools and services to the client.
+                        </p>
+                        <p class="text-gray-200 mb-8">
+                            From the start of the project, we provide accessible tools for your entire API lifecycle.
+                        </p>
+                        <button class="bg-black text-primary px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition">
+                            Get Started
+                        </button>
+                    </div>
+                    <div class="md:w-1/2 bg-gray-800 flex items-center justify-center p-8">
+                        <div class="relative">
+                            <div class="absolute -top-4 -left-4 w-32 h-32 rounded-full opacity-20"></div>
+                            <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-blue-500 rounded-full opacity-20"></div>
+                            <div class="relative bg-gray-700 rounded-xl p-6 w-64">
+                                <div class="flex justify-between items-center mb-6">
+                                    <div class="text-lg font-bold">POST/COM BE</div>
+                                    <i class="fas fa-share-alt text-primary"></i>
+                                </div>
+                                <div class="bg-gray-600 rounded-lg p-4 mb-4">
+                                    <div class="text-sm text-gray-300">API Platform</div>
+                                    <div class="font-medium">The complete solution</div>
+                                </div>
+                                <div class="text-sm text-gray-400">
+                                    The platform is the virtual platform that provides the new tools and services to the client.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-footer text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-bolt text-white"></i>
+                        </div>
+                        <img src={logoWhite.src} alt="Qonnect Logo" class="inline-block h-7">
+                    </div>
+                    <p class="mb-4">
+                        Your complete API platform from design to delivery.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-github"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Features</a></li>
+                        <li><a href="#" class="hover:text-white">Collaboration</a></li>
+                        <li><a href="#" class="hover:text-white">Security</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white">Tutorials</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">Support</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 text-white">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">News</a></li>
+                        <li><a href="#" class="hover:text-white">Partners</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-sm text-gray-500">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        &copy; 2025 QonnectOne. All rights reserved.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="hover:text-gray-300">Terms</a>
+                        <a href="#" class="hover:text-gray-300">Privacy Policy</a>
+                        <a href="#" class="hover:text-gray-300">Status</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const htmlElement = document.documentElement;
+
+        darkModeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+
+            console.log('darkModeToggle', darkModeToggle)
+
+            // Update button icon
+            const icon = darkModeToggle.querySelector('i');
+            if (htmlElement.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            htmlElement.classList.add('dark');
+            const icon = darkModeToggle.querySelector('i');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+
+        // Save preference to localStorage
+        darkModeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>

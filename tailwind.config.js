@@ -1,14 +1,22 @@
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: [
-    './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+    './src/**/*.{astro,html,js,jsx,ts,tsx,vue,svelte}',
+    './index.html',
+    './public/**/*.html',
   ],
   theme: {
     extend: {
       colors: {
-        primary: '#3B82F6',
-        secondary: '#1E40AF',
-        accent: '#10B981'
-      }
-    }
-  }
-};
+        text: theme.colors.default.text_color.default,
+        light: theme.colors.default.text_color.light,
+        dark: theme.colors.default.text_color.dark,
+        primary: theme.colors.default.theme_color.primary,
+      },
+      fontFamily: {
+        primary: ["var(--font-primary)", fontPrimaryType],
+        secondary: ["var(--font-secondary)", fontSecondaryType],
+      },
+    },
+  },
+}
