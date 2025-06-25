@@ -6,10 +6,10 @@ h1,h2,h3,h4,h5,h6 {
     font-family: "Montserrat", sans-serif;
 }
 .bg-blue {
-    background-color: #3f3f8f;
+    background-color: #4c64b4;
 }
 .hero-bg {
-    background: linear-gradient(135deg, #3f3f8f 0%, #2a2a63 100%);
+    background: linear-gradient(135deg, #4c64b4 0%, #2a2a63 100%);
 }
 .platform-card {
     background: linear-gradient(135deg, #3f3f8f 00%, #1d1d42 100%);
@@ -49,7 +49,7 @@ h1,h2,h3,h4,h5,h6 {
     display: block;
     width: 0;
     height: 2px;
-    background: #5a8ad8;
+    background: #4c64b4;
     transition: width 0.3s;
 }
 .nav-link:hover::after {
