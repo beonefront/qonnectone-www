@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qonnect - Nowa technologia płatności.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .logo-container {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .language-switch {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .language-switch:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .pulse {
+            animation: pulse 3s infinite;
+        }
+    </style>
+</head>
+<body class="px-4 py-8">
+    <div class="max-w-md w-full">
+        <!-- Logo -->
+        <div class="logo-container w-auto h-32 rounded-2xl bg-white shadow-sm flex items-center justify-center mx-auto mb-8 pulse">
+            <img src="./logo.png" alt="Logo" class="absolute w-auto h-10 m-0 p-0">
+        </div>
+
+        <!-- Bilingual Message -->
+        <div class="bg-white rounded-2xl shadow-sm p-8 mb-8 text-center">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Under Construction</h1>
+                <p class="text-gray-600 mb-6">
+                    We're building an amazing experience for you. Please check back soon!
+                </p>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100">
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">W Budowie</h1>
+                <p class="text-gray-600">
+                    Pracujemy nad nową, lepszą wersją naszej strony. Zapraszamy wkrótce!
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="text-center">
+            <!-- <p class="text-gray-500 mb-4">Contact us at:</p> -->
+            <p class="text-indigo-600 font-medium">
+                BEONE PAYMENT SP. Z O.O. <br>
+                Lęborska 3B <br>
+                80-386 Gdańsk <br>
+                Polska
+            </p>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="mt-12">
+            <div class="flex justify-between text-sm text-gray-500 mb-2">
+                <span>Development Progress</span>
+                <span>68%</span>
+            </div>
+            <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-indigo-500 to-purple-600" style="width: 68%"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-12 text-center">
+            <p class="text-gray-400 text-sm">© 2025 BEONE PAYMENT. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
